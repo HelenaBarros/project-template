@@ -1,0 +1,41 @@
+{
+    "courses": [
+	{
+	    "abbrev" : "CW",
+	    "name" : "Computation for Web"
+	},
+	{
+	    "abbrev" : "BA",
+	    "name" : "Business Analysis"
+	},
+	{
+	    "abbrev" : "SI",
+	    "name" : "Systems Integration"
+	},
+	{
+	    "abbrev" : "OIA",
+	    "name" : "Organizational Information Systems"
+	},
+	{
+	    "abbrev" : "CS",
+	    "name" : "Computer Systems"
+	},
+	{
+	    "abbrev" : "ADS",
+	    "name" : "Algorithms and Data Structures"
+	},
+	{
+	    "abbrev" : "DB",
+	    "name" : "Databases"
+	},
+	{
+	    "abbrev" : "SM",
+	    "name" : "Systems Modelling"
+	},
+	{
+	    "abbrev" : "SE",
+	    "name" : "Software Engineering"
+	}
+
+    ]
+}
