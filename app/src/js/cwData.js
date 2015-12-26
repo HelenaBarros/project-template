@@ -1,50 +1,71 @@
 var app = angular.module('cwApp', []);
-var data =[];
 app.controller('cwCtrl', function($scope, $http) {
-	$http.get("http://127.0.0.1:8090/doctors.json").then(function(response) {
-		$scope.data=response.data;
+	$http.get("http://localhost:9000/patients").then(function(response) {
+		$scope.patients = response.data;
 	});
-	// $scope.username = 'John Doe';
-    // $scope.password = 'pass';
-	$scope.myfunction= function(user,pass){
-		for (var i=0;i<$scope.data.length;i++){
-			if ($scope.data[i].user===user){
-				if ($scope.data[i].pass===pass){
-					$scope.login=true
-				}else{
-					$scope.login=false
-				}
-			}
-		}
-	}
-	$scope.errorMessage=function(){
-		if ($scope.login){
-			return "Username or Password Incorrect";
-		}else{
-			return ""
-		}
-		
-	}
-}); 
 
-app.controller('dataCtrl', function($scope, $http) {
-	$http.get("http://127.0.0.1:8090/acts.json").then(function(response) {
+	$http.get("http://localhost:9000/requests").then(function(response) {
+		$scope.requests = response.data;
+	});
+
+	$http.get("http://localhost:9000/acts").then(function(response) {
 		$scope.acts = response.data;
 	});
 
-});
+	$scope.default_mess="";
+	$scope.medicalActs=false;
 
-// function myFunction() {
-		// if (1==1){
-			// var x = document.getElementById($scope.user.password).value;
-			// document.getElementById($scope.user.sub).innerHTML = "You wrote: " + x;
-			// show('Page2','Page1');
-			// return
-// }
-		// }
-		
-		// function show(shown, hidden) {
-		  // document.getElementById(shown).style.display='block';
-		  // document.getElementById(hidden).style.display='none';
-		  // return false;
-		// }
+	$scope.myfunction= function(user,pass){
+		$http.post("http://localhost:9000/login",{usr:user,password:pass}).then(function(response) {
+					if (response.data[0]){
+						$scope.login=true
+						$scope.doc=response.data[1]
+						$scope.default_mess=""
+					}else{
+						$scope.login=false
+						$scope.default_mess="Username or Password Incorrect !"
+					}
+		});
+	}
+
+	$scope.change=function(){
+		$scope.default_mess=""
+		$scope.login=false
+	}
+
+	$scope.dataActs=function(p){
+
+		$scope.p_name=p.name
+		$scope.p_patID=p.patID
+		$scope.p_pon=p.policy_number
+		$scope.p_pot=p.policy_type
+
+		$http.post("http://localhost:9000/actsPat",{patientID:p.patID,policyType:p.policy_type}).then(function(response) {
+			$scope.actsdata = response.data;
+		});
+	}
+
+	$scope.save=function(p){
+		$http.post("http://localhost:9000/save",{acttype:p.actID,actname:p.name,cost:p.cost,patientId:$scope.p_patID,poltype:$scope.p_pot}).then(function(response) {
+			$scope.actsdata = response.data;
+		});
+	}
+
+	$scope.delete=function(ad){
+		preDel = $scope.actsdata.filter(function(el){return el.type==ad.type})
+		if (preDel.length>1){
+			preDel.pop();
+			$scope.actsdata = $scope.actsdata.filter(function(el){return el.type !== ad.type;});
+			$scope.actsdata.push(preDel[0])
+		}else{
+			$scope.actsdata = $scope.actsdata.filter(function(el){return el.type !== ad.type;});
+		}
+
+	}
+
+	$scope.medActs=function(){
+		$scope.medicalActs=!$scope.medicalActs;
+	}
+
+
+});

@@ -2,231 +2,310 @@
 <html>
 
 	<head>
+
+	<link href="/css/panel-header.css" rel="stylesheet">
 	<meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 	<script src="/js/cwData.js"></script>
-	<script>
-		function validate() {
-			var userPass = document.getElementById("pass").value.toString();
-			var pass="pass";
-			if (userPass==pass){
-				document.getElementById("sub").innerHTML = "";
-				return show('Page2','Page1');
-			}else if(userPass==''){
-				document.getElementById("sub").innerHTML = "";
-			}else{
-				document.getElementById("sub").innerHTML = "Username or Password Incorrect";
-			}
-		}
-	</script>
 	<link href="http://alfredoferreira.eu/cw/css/bootstrap.min.css" rel="stylesheet">
 	<link href="http://alfredoferreira.eu/cw/css/bootstrap-theme.min.css" rel="stylesheet">
 	<link href="http://alfredoferreira.eu/cw/css/theme.css" rel="stylesheet">
-	<link rel="icon" href="../../favicon.ico">
-
+	<style>
+		table {border-collapse: collapse;width: 100%;}
+		th, td {text-align: center;padding: 12px;}
+		th {background-color: #5C99C2;color: white;}
+		tr:nth-child(even){background-color: #f2f2f2}
+		.modal .modal-dialog{width: 1200px}
+	</style>
 	</head>
 		<body ng-app="cwApp" data-ng-controller="cwCtrl">
-		<div class="col-sm-1"></div>
-		<!--div class="col-sm-12"-->
-			<div ng-show="!login" id="Page1" class="panel panel-default">
-					<div class="panel-body">
-						<div class="row">
-							<div class="col-sm-5" align="right">
-							<img src="/img/insureLogo.jpg" class="img-rounded" alt="Hospital Logo" width="280" height="280">
-							</div>
-							<div class="col-sm-5" align="left">
-							<br/><br/><br/><br/><br/><!--br/>	<br/><br/><br/>	<br/><br/-->
-							<!--strong style="font-size:45px;" id="sub">InSure Health Service</strong-->
-							<img src="/img/insure.jpg" class="img-rounded" alt="Hospital moto" width="500" height="180">
-							</div>
-						</div>
-					</div>
-				<div class="panel panel-default" align="vcenter">
-					<form name="cwForm" >
-						<div class="panel-footer">
+			<div class="col-sm-1"></div>
+				<div ng-show="!login" id="Page1" class="panel panel-default">
+						<div class="panel-body">
 							<div class="row">
-								<div class="col-sm-4" align="right" style="font-size:24px;"><label for="usr">Username:</label></div>
-								<div class="col-sm-4"><input id="user"type="text" class="form-control" placeholder="Username" name="username" data-ng-model="username" required/></div>
-								<div class="col-sm-4" align="left" ><span style="color:red"><span ng-show="cwForm.username.$error.required">Username is required.</span>
-									</span></div>
-							</div>
-							<br/>
-							<div class="row">
-								<div class="col-sm-4"  align="right" style="font-size:24px;"><label for="usr">Password:</label></div>
-								<div class="col-sm-4"><input id="pass" type="password" class="form-control" placeholder="Password" data-ng-model="password" name="password" required/></div>
-								<div class="col-sm-4" align="left"><span style="color:red"><span ng-show="cwForm.password.$error.required">Password is required.</span>
-
-								</span></div>
-							</div>
-							<br/>
-							<div class="row">
-								<div class="col-sm-12" align="center">(Forgot your Password?)</div>
-							</div>
-							<br/>
-							<div class="row">
-								<p id="sub"></p>
-								<div class="col-sm-12" align="center">
-									<button ng-click="myfunction(username,password)" id="submit" type="submit" class="btn btn-large btn-primary">Log in</button>
-									<strong style="font-size:17px;" id="sub">{{errorMessage()}}</strong>
+								<div class="col-sm-5" align="right">
+								<img src="/img/insureLogo.jpg" class="img-rounded" alt="Hospital Logo" width="280" height="280">
+								</div>
+								<div class="col-sm-5" align="left">
+								<br/><br/><br/><br/><br/>
+								<img src="/img/insure.jpg" class="img-rounded" alt="Hospital moto" width="500" height="180">
 								</div>
 							</div>
 						</div>
-					</form>
+					<div class="panel panel-default" align="vcenter">
+						<form name="cwForm" >
+							<div class="panel-footer">
+								<div class="row">
+									<div class="col-sm-4" align="right" style="font-size:24px;"><label for="usr">Username:</label></div>
+									<div class="col-sm-4"><input id="user"type="text" class="form-control" placeholder="Username" name="username" data-ng-model="username" required/></div>
+									<div class="col-sm-4" align="left" ><span style="color:red"><span ng-show="cwForm.username.$error.required">Username is required.</span>
+										</span></div>
+								</div>
+								<br/>
+								<div class="row">
+									<div class="col-sm-4"  align="right" style="font-size:24px;"><label for="usr">Password:</label></div>
+									<div class="col-sm-4"><input id="pass" type="password" class="form-control" placeholder="Password" data-ng-model="password" name="password" required/></div>
+									<div class="col-sm-4" align="left"><span style="color:red"><span ng-show="cwForm.password.$error.required">Password is required.</span>
+									<strong style="font-size:17px;" id="sub">{{default_mess}}</strong>
+									</span></div>
+								</div>
+								<br/>
+								<div class="row">
+									<div class="col-sm-12" align="center">(Forgot your Password?)</div>
+								</div>
+								<br/>
+								<div class="row">
+									<p id="sub"></p>
+									<div class="col-sm-12" align="center">
+										<button ng-click="myfunction(username,password)" id="submit" type="submit" class="btn btn-large btn-primary">Log in</button>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
 				</div>
+				<div class="col-sm-1"></div>
 			</div>
-			<!--/div-->
 
-
-			<div class="col-sm-1"></div>
-		<div ng-show="login" id="Page2">
-			<nav class="navbar navbar-default navbar-fixed-top">
-                                            <div class="container">
-                                                           <div class="row">
-																		<div class="col-md-1"></div>
-                                                                          <div class="col-md-1">
-                                                                          <table>
-                                                                                         <td> <img src="C:\Users\hebarros\Desktop\cw\images.jpg"></img></td>
-                                                                                         <td> <button type="button" ng-click="login=false" class="btn btn-default navbar-btn">InSure WebApp</button> </td>
-                                                                          </table>
-                                                                          </div>
-                                                                          <ul class="nav navbar-nav navbar-right">
-                                                                                         <div class="col-md-6">
-                                                                                                       <table>
-                                                                                                                      <td> <button type="button" class="btn btn-default navbar-btn"> Albino Fonseca </button> </td>
-                                                                                                                      <td> <img src="C:\Users\hebarros\Desktop\cw\user-alt-128.png"></img> </td>
-                                                                                                       </table>
-                                                                                         </div>
-                                                                          </ul>
-                                                           </div>
-                                            </div>
-                              </nav>
-							  <br/><br/><br/>
-
-
-
-
-      <div class="row">
-
-	    <div class="col-sm-1"></div>
-
-        <div class="col-sm-4">
-			<div class="panel panel-default">
-				<div class="panel-heading"> PERSONAL INFO </div>
-				<div class="panel-body">
-					<table class="table table">
-						<tr><td><b>Name:</b></td><td>Helena Barros</td>
-						<tr><td><b>ID:</b></td><td>966002787</td>
-						<tr><td><b>Address:</b></td><td>Alameda das Linhas de Torres</td>
-					</table>
-				</div>
-			</div>
-        </div>
-
-        <div class="col-sm-6">
-            <!--<div class="panel panel-default">
-				<div class="panel-body">-->
-					<div class="panel panel-default">
-						<div class="panel-heading"> MEDICAL ACTS </div>
-						<div class="panel-body">
-							<table class="table table-striped">
-
-							<col width="80">
-							<col width="80">
-							<col width="80">
-							<col width="80">
-
-								<thead>
-								<tr>
-									<th>Type</th>
-									<th>Cost</th>
-									<th>Reimbursement</th>
-									<th>Delete</th>
-								</tr>
-								</thead>
-								<tbody>
-
-
-									<tr>
-									<td>X-Ray</td>
-									<td>180</td>
-									<td>90%</td>
-									<td class="col-sm-8>
-										<div class="text-center">
-									        <!--<div class="panel-title btn-group">
-											<button type="button" class="btn btn-default btn-sm" align="left">
-											<span class="glyphicon glyphicon-minus"></span>
-											</button>
-									        </div>-->
-											<button type="button" class="btn btn-danger">   -    </button>
-
-									    </div>
+			<div ng-show="login && !medicalActs" id="Page2">
+			<nav class="navbar navbar-default navbar-fixed-top" align="left">
+				<div class="container ">
+					<div class="row">
+						<div class="col-sm-6">
+						<table>
+							<td> <img src="/img/insureLogo.jpg" width="100" height="100" ></img></td>
+							<td>
+								<ul class="nav nav-pills">
+								<li role="presentation"><a href="#" ng-click="change()"> <h2> InSure <br> Health Service </h2> </a></li>
+								</ul>
+							</td>
+						</table>
+						</div>
+						<ul class="nav navbar-nav navbar-right">
+							<div class="col-sm-6">
+								<table>
+									<td>
+										<ul class="nav nav-pills">
+											<li role="presentation"><a href="#"> <h3> {{doc}} </h3> </a></li>
+										</ul>
 									</td>
-									</tr>
-
-									<tr>
-									<td>CT scan</td>
-									<td>1000</td>
-									<td>85%</td>
-									<td> </td>
-									</tr>
-
-							</table>
-
-
-						</div>
-					</div>
-
-
-					<div class="text-center">
-					   <div class="panel-title btn-group">
-							<button type="button" class="btn btn-default btn-sm">
-							<span class="glyphicon glyphicon-plus"></span> Plus
-							</button>
-					   </div>
-					</div>
-
-
-					<!--<div class="panel panel-default">
-						<div class="panel-heading"> MEDICAL REPORTS </div>
-						<div class="panel-body">
-							<table class="table table-striped">
-								<thead>
-								<tr>
-									<th>Row</th>
-									<th>First Name</th>
-									<th>Last Name</th>
-									<th>Email</th>
-								</tr>
-								</thead>
-								<tbody>
-									<tr>
-									<td>1</td>
-									<td>John</td>
-									<td>Carter</td>
-									<td>johncarter@mail.com</td>
-									</tr>
-							</table>
-						</div>
-					</div>-->
-				<!--</div>-->
-			<!--</div>-->
-        </div>
-      </div>
-      <div class="panel panel-default" ng-app="cwApp">
-	  <table ng-controller="dataCtrl">
-									<tr data-ng-repeat="c in acts">
-										<td>{{c.actID }}</td><td>( {{c.name}} )</td><td>( {{c.cost}} )</td>
-									</tr>
+									<td> <img src="/img/user-alt-128.png"></img> </td>
 								</table>
-    <!--</div>-->
-  <!--</div>-->
-</div>
-			<a href="#" ng-click="login=false">Show page 1</a>
-		</div>
+							</div>
+						</ul>
+					</div>
+				</div>
+			</nav>
 
-	</body>
- </html>
+			<br></br><br></br><br></br><br></br>
+
+			<div class="row">
+				<div class="col-sm-1"> </div>
+					<div class="col-sm-6 col-md-4">
+						<div class="panel panel-primeiro" >
+						<!-- Default panel contents -->
+							<div class="panel-heading"> <h3> Waiting List </h3> </div>
+							<br></br>
+							<!-- Table -->
+
+							<table style="overflow-x:auto;" class="table table-hover">
+									<tr style="font-size:17px">
+										<th>Patient ID</th>
+										<th>Patient Name</th>
+									</tr>
+									<tr class='clickable-row' ng-click="medActs();dataActs(p)" data-ng-repeat="p in patients">
+										<td>{{p.patID }}</td><td>{{p.name}}</td>
+									</tr>
+							</table>
+						</div>
+					</div>
+
+					<div class="col-sm-6 col-md-6">
+						<div class="panel panel-primeiro">
+							<!-- Default panel contents -->
+								<div class="panel-heading"> <h3> Insurance Requests <h3> </div>
+								<br></br>
+								<!-- Table -->
+								<table class="table">
+									<div class="panel panel-segundo">
+										<div class="panel-heading"><b style="font-size:17px;">Pending</b></div>
+										<table ng-controller="cwCtrl" style="overflow-x:auto;" class="table">
+											<tr style="font-size:17px;background-color:white;color=white">
+												<th>Request ID</th>
+												<th>Report ID</th>
+												<th>Status</th>
+											</tr >
+											<tr data-ng-repeat="c in requests | filter:'PENDING' | orderBy: 'reqID'">
+												<td>{{c.reqID }}</td><td>{{c.repID}}</td><td>{{c.status}}</td>
+											</tr>
+										</table>
+									</div>
+									<div class="panel panel-segundo">
+										<div class="panel-heading"><b style="font-size:17px;">Accepted</b></div><br>
+											<table ng-controller="cwCtrl" style="overflow-x:auto;" class="table">
+												<tr style="font-size:17px;background-color:white;color=white">
+													<th>Request ID</th>
+													<th>Report ID</th>
+													<th>Status</th>
+												</tr >
+												<tr data-ng-repeat="c in requests | filter:'ACCEPTED' | orderBy: 'reqID'">
+													<td>{{c.reqID }}</td><td>{{c.repID}}</td><td>{{c.status}}</td>
+												</tr>
+											</table>
+									</div>
+									<div class="panel panel-segundo">
+										<div class="panel-heading"><b style="font-size:17px;">Rejected</b></div><br>
+											<table ng-controller="cwCtrl" style="overflow-x:auto;" class="table">
+												<tr style="font-size:17px;background-color:white;color=white">
+													<th>Request ID</th>
+													<th>Report ID</th>
+													<th>Status</th>
+												</tr >
+												<tr data-ng-repeat="c in requests | filter:'REJECTED' | orderBy: 'reqID'">
+													<td>{{c.reqID }}</td><td>{{c.repID}}</td><td>{{c.status}}</td>
+												</tr>
+											</table>
+									</div>
+									<div class="panel panel-segundo">
+										<div class="panel-heading"><b style="font-size:17px;">Requested</b></div><br>
+											<table ng-controller="cwCtrl" style="overflow-x:auto;" class="table">
+												<tr style="font-size:17px;background-color:white;color=white">
+													<th>Request ID</th>
+													<th>Report ID</th>
+													<th>Status</th>
+												</tr >
+												<tr data-ng-repeat="c in requests | filter:'REQUESTED' | orderBy: 'reqID'">
+													<td>{{c.reqID }}</td><td>{{c.repID}}</td><td>{{c.status}}</td>
+												</tr>
+											</table>
+									</div>
+								</table>
+						</div>
+				</div>
+			</div>
+
+
+			</div>
+
+
+
+
+
+
+
+
+
+			<div ng-show="medicalActs" id="Page3">
+				<nav class="navbar navbar-default navbar-fixed-top">
+				<div class="container">
+					<div class="row">
+						<div class="col-sm-6">
+						<table>
+							<td> <img src="/img/insureLogo.jpg" width="100" height="100" ></img></td>
+							<td>
+								<ul class="nav nav-pills">
+								<li role="presentation"><a href="#" ng-click="change();medActs()"> <h2> InSure <br> Health Service </h2> </a></li>
+								</ul>
+							</td>
+						</table>
+						</div>
+						<ul class="nav navbar-nav navbar-right">
+							<div class="col-sm-6">
+								<table>
+									<td>
+										<ul class="nav nav-pills">
+											<li role="presentation"><a href="#"> <h3> {{doc}} </h3> </a></li>
+										</ul>
+									</td>
+									<td> <img src="/img/user-alt-128.png"></img> </td>
+								</table>
+							</div>
+						</ul>
+					</div>
+				</div>
+				</nav>
+
+				<br></br><br></br><br></br><br></br>
+
+				<div class="row">
+					<div class="col-sm-1"> </div>
+						<div class="col-sm-6 col-md-4">
+							<div class="panel panel-primeiro" >
+							<!-- Default panel contents -->
+								<div class="panel-heading"> <h3> Personal Info</h3> </div>
+									<div class="panel-body">
+										<table ng-controller="cwCtrl" style="overflow-x:auto;" class="table">
+											<tr><td><b>Name</b></td><td>{{p_name}}</td>
+											<tr><td><b>Patient ID</b></td><td>{{p_patID}}</td>
+											<tr><td><b>Policy Number</b></td><td>{{p_pon}}</td>
+											<tr><td><b>Policy Type</b></td><td>{{p_pot}}</td>
+										</table>
+									</div>
+							</div>
+						</div>
+
+					<div class="col-sm-6 col-md-6">
+						<div class="panel panel-primeiro">
+						<!-- Default panel contents -->
+							<div class="panel-heading"> <h3> Medical Acts </h3></div>
+								<div class="panel-body">
+									<table ng-controller="cwCtrl" style="overflow-x:auto;" class="table">
+										<tr style="font-size:17px;">
+											<th>Type</th>
+											<th>Cost</th>
+											<th>Reimbursement</th>
+											<th>Delete</th>
+										</tr>
+										<tr data-ng-repeat="ad in actsdata | orderBy:'type'">
+											<td>{{ad.type}}</td>
+											<td>{{ad.cost}}</td>
+											<td>{{ad.reimb}}</td>
+											<td><button type="button" ng-click="delete(ad)" class="btn btn-danger btn-xs">   -    </button></td>
+										</tr>
+									</table>
+									<div class="text-center">
+										<div class="panel-title btn-group">
+											<button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus"></span> Plus</button>
+											  <!-- Modal -->
+											  <div class="modal fade" id="myModal" role="dialog">
+												<div class="modal-dialog modal-lg">
+												  <div class="modal-content">
+													<div class="modal-header">
+													  <button type="button" class="close" data-dismiss="modal">&times;</button>
+													  <h4 class="modal-title">Create New Medical Act</h4>
+													</div>
+													<div class="modal-body">
+													  <table style="overflow-x:auto;" class="table table-hover">
+																<tr style="font-size:15px">
+																	<th>Act ID</th>
+																	<th>Type</th>
+																	<th>Cost</th>
+																</tr>
+																<tr class='clickable-row' ng-click="save(a)" data-ng-repeat="a in acts">
+																	<td>{{a.actID}}</td><td>{{a.name}}</td><td>{{a.cost}}</td>
+																</tr>
+														</table>
+														</div>
+														<div class="modal-footer">
+														  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+														</div>
+													  </div>
+													</div>
+												  </div>
+											</div>
+										</div>
+									</div>
+									<br></br>
+									<table><tr><td><button type="button" ng-click="medActs()" class="btn btn-success" data-dismiss="modal" align="center">Submit</button></td></tr></table>
+							</div>
+						</div>
+					</div>
+				</div>
+		</body>
+	 </html>
