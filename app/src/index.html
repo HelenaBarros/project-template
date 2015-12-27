@@ -129,7 +129,7 @@
 					<div class="col-sm-6 col-md-6">
 						<div class="panel panel-primeiro">
 							<!-- Default panel contents -->
-								<div class="panel-heading"> <h3> Insurance Requests <h3> </div>
+								<div class="panel-heading"> <h3> Insurance Requests <h3> <button type="button" ng-click="myfunction(username,password)" class="btn ">   Refresh    </button></div>
 								<br></br>
 
 								<div class="panel-group">
@@ -146,9 +146,11 @@
 														<th>Request ID</th>
 														<th>Report ID</th>
 														<th>Status</th>
+														<th>Date</th>
+														<th>Patient ID</th>
 													</tr >
 													<tr data-ng-repeat="c in aux | filter:'PENDING' | orderBy: 'reqID'">
-														<td>{{c.reqID }}</td><td>{{c.repID}}</td><td>{{c.status}}</td>
+														<td>{{c.reqID }}</td><td>{{c.repID}}</td><td>{{c.status}}</td><td>{{c.date}}</td><td>{{c.patientid}}</td>
 													</tr>
 											</table>
 
@@ -170,9 +172,11 @@
 													<th>Request ID</th>
 													<th>Report ID</th>
 													<th>Status</th>
+													<th>Date</th>
+													<th>Patient ID</th>
 												</tr >
 												<tr data-ng-repeat="c in aux | filter:'ACCEPTED' | orderBy: 'reqID'">
-													<td>{{c.reqID }}</td><td>{{c.repID}}</td><td>{{c.status}}</td>
+													<td>{{c.reqID }}</td><td>{{c.repID}}</td><td>{{c.status}}</td><td>{{c.date}}</td><td>{{c.patientid}}</td>
 												</tr>
 											</table>
 
@@ -194,9 +198,11 @@
 													<th>Request ID</th>
 													<th>Report ID</th>
 													<th>Status</th>
+													<th>Date</th>
+													<th>Patient ID</th>
 												</tr >
 												<tr data-ng-repeat="c in aux | filter:'REJECTED' | orderBy: 'reqID'">
-													<td>{{c.reqID }}</td><td>{{c.repID}}</td><td>{{c.status}}</td>
+													<td>{{c.reqID }}</td><td>{{c.repID}}</td><td>{{c.status}}</td><td>{{c.date}}</td><td>{{c.patientid}}</td>
 												</tr>
 											</table>
 
@@ -218,9 +224,11 @@
 													<th>Request ID</th>
 													<th>Report ID</th>
 													<th>Status</th>
+													<th>Date</th>
+													<th>Patient ID</th>
 												</tr >
 												<tr data-ng-repeat="c in aux | filter:'REQUESTED' | orderBy: 'reqID'">
-													<td>{{c.reqID }}</td><td>{{c.repID}}</td><td>{{c.status}}</td>
+													<td>{{c.reqID }}</td><td>{{c.repID}}</td><td>{{c.status}}</td><td>{{c.date}}</td><td>{{c.patientid}}</td>
 												</tr>
 											</table>
 
@@ -293,7 +301,7 @@
 											<th>Reimbursement</th>
 											<th>Delete</th>
 										</tr>
-										<tr data-ng-repeat="ad in actsdata | orderBy:'type'">
+										<tr data-ng-repeat="ad in actsdata ">
 											<td>{{ad.type}}</td>
 											<td>{{ad.cost}}</td>
 											<td>{{ad.reimb}}</td>

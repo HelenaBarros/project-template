@@ -17,12 +17,13 @@ exports.login = function (usr,pass) {
     if (doctor[i].user==usr){
       if (doctor[i].pass==pass){
           doc=doctor[i].name;
+          docn=doctor[i].docID;
         aux = [];reports_filter=[];
         reports_filter = report.filter(function (el) {return el.docID == doctor[i].docID})
         for (var i=0; i<reports_filter.length; i++){
           for (var j=0; j<request.length; j++) {
             if (request[j].repID === reports_filter[i].repID){
-            aux.push({reqID: request[j].reqID, repID: request[j].repID, status: request[j].status});
+            aux.push({reqID: request[j].reqID, repID: request[j].repID, status: request[j].status,date:reports_filter[i].date,patientid:reports_filter[i].patID});
             }
           }
         }
@@ -66,9 +67,11 @@ exports.actsPat= function(pId,policyT){
 exports.save = function(doc,type,pID,ptype){
   actsrembdata=actsrmb.filter(function(el){
   return el.policy_type == ptype})
-
-  report.push({"repID":report.length,"date":"1/1/2012","docID":doc,"patID":pID,"actID":type,"actual_reimb_perc":actsrembdata[0].reimb_percentage});
+  var today=new Date();var dd=today.getDate();var mm=today.getMonth()+1;var yy=today.getFullYear();today=dd+'/'+mm+'/'+yy;
+  report.push({"repID":report.length,"date":today,"docID":docn,"patID":pID,"actID":type,"actual_reimb_perc":actsrembdata[0].reimb_percentage});
+  request.push({"reqID":request.length,"repID":report.length-1,"status":"PENDING"})
   fs.writeFileSync('/home/sise-cweb/Desktop/project-template/bl/src/reports.json', JSON.stringify(report))
+  fs.writeFileSync('/home/sise-cweb/Desktop/project-template/bl/src/requests.json', JSON.stringify(request))
   //var reports2=require('./reports.json')
   var reportsdata=[];var actsdata=[];
 
@@ -85,9 +88,6 @@ exports.save = function(doc,type,pID,ptype){
 
 exports.delete = function (reports,patient,ptype){
 
-  actsrembdata=actsrmb.filter(function(el){
-  return el.policy_type == ptype})
-
   var index = -1;
   var comArr = eval(report);
   for( var i = 0; i < comArr.length; i++ ) {
@@ -98,7 +98,16 @@ exports.delete = function (reports,patient,ptype){
   }
   report.splice( index, 1 );
 
-  fs.writeFileSync('/home/sise-cweb/Desktop/project-template/bl/src/reports.json', JSON.stringify(report))
-  //var reports2=require('./reports.json')
+  var index = -1;
+  var comArr = eval(request);
+  for( var i = 0; i < comArr.length; i++ ) {
+    if( comArr[i].repID === reports) {
+      index = i;
+      break;
+    }
+  }
+  request.splice( index, 1 );
 
+  fs.writeFileSync('/home/sise-cweb/Desktop/project-template/bl/src/reports.json', JSON.stringify(report))
+  fs.writeFileSync('/home/sise-cweb/Desktop/project-template/bl/src/requests.json', JSON.stringify(request))
 }

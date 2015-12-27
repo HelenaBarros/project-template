@@ -58,9 +58,8 @@ app.controller('cwCtrl', function($scope, $http) {
 
 	$scope.delete=function(rep){
 		var index = -1;
-		var comArr = eval($scope.actsdata);
-		for( var i = 0; i < comArr.length; i++ ) {
-			if( comArr[i].act_repID === rep ) {
+		for( var i = 0; i < $scope.actsdata.length; i++ ) {
+			if( $scope.actsdata[i].repId === rep ) {
 				index = i;
 				break;
 			}
