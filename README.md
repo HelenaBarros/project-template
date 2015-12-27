@@ -1,9 +1,7 @@
 SISE-CWEB Project Group 1
 ==========================
 
-## Project assignment
-
-## Project submission
+## Project Assignment Main Steps 
 
 In this project it is possible to perform the login with any doctor present in the doctors.json. In case of error a message is displayed. 
 
@@ -15,7 +13,7 @@ After making any change regarding the acts (for example, adding a new one in the
 
 Finally, whenever the user desires, it is possible to return to the log in page by clicking in the InSurance Health Service button at the top right of the page.
 
-## Template
+## PROJECT MAIN FOLDER
 
 This project template you offers you with a foundation on how to structure your code for the SISE-CWEB Project.
 
