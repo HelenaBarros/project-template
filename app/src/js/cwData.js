@@ -4,9 +4,13 @@ app.controller('cwCtrl', function($scope, $http) {
 		$scope.patients = response.data;
 	});
 
-	$http.get("http://localhost:9000/requests").then(function(response) {
-		$scope.requests = response.data;
-	});
+//	$http.get("http://localhost:9000/requests").then(function(response) {
+//		$scope.requests = response.data;
+//	});
+
+//	$http.get("http://localhost:9000/reports").then(function(response) {
+//		$scope.reports = response.data;
+//	});
 
 	$http.get("http://localhost:9000/acts").then(function(response) {
 		$scope.acts = response.data;
@@ -18,6 +22,7 @@ app.controller('cwCtrl', function($scope, $http) {
 	$scope.myfunction= function(user,pass){
 		$http.post("http://localhost:9000/login",{usr:user,password:pass}).then(function(response) {
 					if (response.data[0]){
+						$scope.aux=response.data[2]
 						$scope.login=true
 						$scope.doc=response.data[1]
 						$scope.default_mess=""
@@ -46,21 +51,25 @@ app.controller('cwCtrl', function($scope, $http) {
 	}
 
 	$scope.save=function(p){
-		$http.post("http://localhost:9000/save",{acttype:p.actID,actname:p.name,cost:p.cost,patientId:$scope.p_patID,poltype:$scope.p_pot}).then(function(response) {
+		$http.post("http://localhost:9000/save",{docid:$scope.doc,acttype:p.actID,patientId:$scope.p_patID,poltype:$scope.p_pot}).then(function(response) {
 			$scope.actsdata = response.data;
 		});
 	}
 
-	$scope.delete=function(ad){
-		preDel = $scope.actsdata.filter(function(el){return el.type==ad.type})
-		if (preDel.length>1){
-			preDel.pop();
-			$scope.actsdata = $scope.actsdata.filter(function(el){return el.type !== ad.type;});
-			$scope.actsdata.push(preDel[0])
-		}else{
-			$scope.actsdata = $scope.actsdata.filter(function(el){return el.type !== ad.type;});
+	$scope.delete=function(rep){
+		var index = -1;
+		var comArr = eval($scope.actsdata);
+		for( var i = 0; i < comArr.length; i++ ) {
+			if( comArr[i].act_repID === rep ) {
+				index = i;
+				break;
+			}
 		}
 
+		$scope.actsdata.splice( index, 1 );
+		$http.post("http://localhost:9000/delete",{reportID:rep,patientID:$scope.p_patID,poltype:$scope.p_pot}).then(function(response) {
+
+		});
 	}
 
 	$scope.medActs=function(){

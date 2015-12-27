@@ -48,3 +48,9 @@ server.route({
   path: '/save',
   handler: resources.hello.save
 })
+
+server.route({
+  method: 'POST',
+  path: '/delete',
+  handler: resources.hello.delete
+})

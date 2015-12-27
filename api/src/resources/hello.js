@@ -31,5 +31,9 @@ exports.actsPat = function handler (request,reply){
 }
 
 exports.save = function handler (request,reply){
-  reply(bl.actsPat(request.payload.acttype,request.payload.actname,request.payload.cost,request.payload.patientId,request.payload.poltype))
+  reply(bl.save(request.payload.docid,request.payload.acttype,request.payload.patientId,request.payload.poltype))
+}
+
+exports.delete = function handler (request,reply){
+  reply(bl.delete(request.payload.reportID,request.payload.patientID,request.payload.poltype))
 }
